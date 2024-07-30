@@ -24,7 +24,9 @@ export const getStaticProps: GetStaticProps = async () => {
     return {
       id: match.id,
       location: match.location,
+      //@ts-ignore
       player1: match.player1.username,
+      //@ts-ignore
       player2: match.player2.username,
       score: match.score,
     };

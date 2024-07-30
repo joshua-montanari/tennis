@@ -25,7 +25,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
   const singleMatch = {
     id: match.id,
+    //@ts-ignore
     player1: match.player1.username,
+    //@ts-ignore
     player2: match.player2.username,
     score: match.score,
   };
