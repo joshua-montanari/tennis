@@ -1,0 +1,29 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  username String   @unique
+  matches  Match[]  @relation("Player1")
+  matches2 Match[]  @relation("Player2")
+}
+
+model Match {
+  id        Int    @id @default(autoincrement())
+  location  String
+  player1   User   @relation("Player1", fields: [player1Id], references: [id])
+  player1Id Int
+  player2   User   @relation("Player2", fields: [player2Id], references: [id])
+  player2Id Int
+  score     String[]
+  createdAt DateTime @default(now())
+}

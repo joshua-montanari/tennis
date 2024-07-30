@@ -1,61 +1,51 @@
-import React from "react"
-import { GetServerSideProps } from "next"
-import ReactMarkdown from "react-markdown"
-import Layout from "../../components/Layout"
-import { PostProps } from "../../components/Post"
+import React from "react";
+import { GetServerSideProps } from "next";
+import Layout from "../../components/Layout";
+import { MatchProps } from "../../components/Post";
+import prisma from "../../lib/prisma";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const post = {
-    id: "1",
-    title: "Prisma is the perfect ORM for Next.js",
-    content: "[Prisma](https://github.com/prisma/prisma) and Next.js go _great_ together!",
-    published: false,
-    author: {
-      name: "Nikolas Burk",
-      email: "burk@prisma.io",
+  const match = await prisma.match.findUnique({
+    where: {
+      id: Number(params?.id),
     },
-  }
-  return {
-    props: post,
-  }
-}
+    include: {
+      player1: {
+        select: {
+          username: true,
+        },
+      },
+      player2: {
+        select: {
+          username: true,
+        },
+      },
+    },
+  });
 
-const Post: React.FC<PostProps> = (props) => {
-  let title = props.title
-  if (!props.published) {
-    title = `${title} (Draft)`
-  }
+  const singleMatch = {
+    id: match.id,
+    player1: match.player1.username,
+    player2: match.player2.username,
+    score: match.score,
+  };
+
+  return {
+    props: singleMatch,
+  };
+};
+
+const Post: React.FC<MatchProps> = (props) => {
+  let title = `${props.player1} Match VS ${props.player2}`;
 
   return (
     <Layout>
       <div>
-        <h2>{title}</h2>
-        <p>By {props?.author?.name || "Unknown author"}</p>
-        <ReactMarkdown children={props.content} />
+        <h1>{title}</h1>
+        Stats on each player goes here
       </div>
-      <style jsx>{`
-        .page {
-          background: white;
-          padding: 2rem;
-        }
-
-        .actions {
-          margin-top: 2rem;
-        }
-
-        button {
-          background: #ececec;
-          border: 0;
-          border-radius: 0.125rem;
-          padding: 1rem 2rem;
-        }
-
-        button + button {
-          margin-left: 1rem;
-        }
-      `}</style>
     </Layout>
-  )
-}
+  );
+};
 
-export default Post
+export default Post;
