@@ -7,10 +7,10 @@ export type MatchProps = {
   player1: string;
   player2: string;
   score: string[];
+  date: string;
 };
 
 const Post: React.FC<{ match: MatchProps }> = ({ match }) => {
-  console.log("JOSH MATCH", match);
   return (
     <div onClick={() => Router.push("/p/[id]", `/p/${match.id}`)}>
       <h2>{match.location} Match</h2>
@@ -22,6 +22,7 @@ const Post: React.FC<{ match: MatchProps }> = ({ match }) => {
       {match.score.map((score) => {
         return <span style={{ padding: "5px" }}>{score}</span>;
       })}
+      <h4>Date Submitted: {match.date}</h4>
       <style jsx>{`
         div {
           color: inherit;

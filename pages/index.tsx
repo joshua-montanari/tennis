@@ -29,6 +29,7 @@ export const getStaticProps: GetStaticProps = async () => {
       //@ts-ignore
       player2: match.player2.username,
       score: match.score,
+      date: JSON.parse(JSON.stringify(match.createdAt)),
     };
   });
   return {
@@ -47,7 +48,7 @@ const Blog: React.FC<Props> = (props) => {
       <div className="page">
         <h1>Recent Matches</h1>
         <main>
-          {props.feed.map((match) => (
+          {props.feed.reverse().map((match) => (
             <div key={match.id} className="post">
               <Post match={match} />
             </div>

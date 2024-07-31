@@ -11,7 +11,13 @@ const Header: React.FC = () => {
     <div className="left">
       <Link href="/">
         <a className="bold" data-active={isActive("/")}>
-          Feed
+          Match Feed
+        </a>
+      </Link>
+
+      <Link href="/p/addMatch">
+        <a className="bold" data-active={isActive("/")}>
+          Add Match
         </a>
       </Link>
       <style jsx>{`
