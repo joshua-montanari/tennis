@@ -43,12 +43,19 @@ type Props = {
 };
 
 const Blog: React.FC<Props> = (props) => {
+  const sortedMatches = props.feed.sort((a, b) => {
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+
+    //return dateA.getTime() - dateB.getTime(); // For ascending order
+    return dateB.getTime() - dateA.getTime(); // For descending order
+  });
   return (
     <Layout>
       <div className="page">
         <h1>Recent Matches</h1>
         <main>
-          {props.feed.reverse().map((match) => (
+          {sortedMatches.map((match) => (
             <div key={match.id} className="post">
               <Post match={match} />
             </div>

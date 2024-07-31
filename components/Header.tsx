@@ -20,6 +20,12 @@ const Header: React.FC = () => {
           Add Match
         </a>
       </Link>
+
+      <Link href="/player-stats">
+        <a className="bold" data-active={isActive("/")}>
+          Player Stats
+        </a>
+      </Link>
       <style jsx>{`
         .bold {
           font-weight: bold;
