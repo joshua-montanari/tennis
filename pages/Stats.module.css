@@ -1,0 +1,44 @@
+.statsContainer {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .heading {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .statRow {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    padding: 10px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+  }
+  
+  .stat {
+    font-size: 1.2em;
+  }
+  
+  .label {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .green {
+    border-color: green;
+  }
+  
+  .yellow {
+    border-color: yellow;
+  }
+  
+  .red {
+    border-color: red;
+  }
+  

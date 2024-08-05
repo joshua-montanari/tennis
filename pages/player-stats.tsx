@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./p/CreateMatchForm.module.css"; // Reusing styles from CreateMatchForm.module.css
 import Layout from "../components/Layout";
+import statsStyles from "./Stats.module.css"; // New CSS module for styling stats
 
 interface User {
   id: number;
@@ -173,6 +174,12 @@ const UserStats: React.FC = () => {
       ? getFilteredStats(Number(selectedUser1), Number(selectedUser2))
       : null;
 
+  const getColorClass = (condition: boolean, equalCondition: boolean) => {
+    if (condition) return statsStyles.green;
+    if (equalCondition) return statsStyles.yellow;
+    return statsStyles.red;
+  };
+
   return (
     <Layout>
       <div className={styles.formContainer}>
@@ -213,34 +220,140 @@ const UserStats: React.FC = () => {
 
           <div className={styles.formGroup}>
             {user1Stats && user1 && (
-              <div>
-                <h3>Stats for {user1.username}</h3>
-                <p>Wins: {user1Stats.wins}</p>
-                <p>Losses: {user1Stats.losses}</p>
-                <p>Win Rate: {user1Stats.winRate.toFixed(2)}%</p>
-                <p>Total Matches: {user1Stats.totalMatches}</p>
-                <p>Sets Won: {user1Stats.setsWon}</p>
-                <p>Sets Lost: {user1Stats.setsLost}</p>
-                <p>Games Won: {user1Stats.gamesWon}</p>
-                <p>Games Lost: {user1Stats.gamesLost}</p>
+              <div className={statsStyles.statsContainer}>
+                <h3 className={statsStyles.heading}>
+                  Stats for {user1.username}
+                </h3>
+                <div
+                  className={`${statsStyles.statRow} ${getColorClass(
+                    user1Stats.wins > user1Stats.losses,
+                    user1Stats.wins === user1Stats.losses
+                  )}`}
+                >
+                  <p className={statsStyles.stat}>
+                    <span className={statsStyles.label}>Wins:</span>{" "}
+                    {user1Stats.wins}
+                  </p>
+                  <p className={statsStyles.stat}>
+                    <span className={statsStyles.label}>Losses:</span>{" "}
+                    {user1Stats.losses}
+                  </p>
+                </div>
+                <div
+                  className={`${statsStyles.statRow} ${getColorClass(
+                    user1Stats.winRate > 50,
+                    user1Stats.winRate === 50
+                  )}`}
+                >
+                  <p className={statsStyles.stat}>
+                    <span className={statsStyles.label}>Win Rate:</span>{" "}
+                    {user1Stats.winRate.toFixed(2)}%
+                  </p>
+                  <p className={statsStyles.stat}>
+                    <span className={statsStyles.label}>Total Matches:</span>{" "}
+                    {user1Stats.totalMatches}
+                  </p>
+                </div>
+                <div
+                  className={`${statsStyles.statRow} ${getColorClass(
+                    user1Stats.setsWon > user1Stats.setsLost,
+                    user1Stats.setsWon === user1Stats.setsLost
+                  )}`}
+                >
+                  <p className={statsStyles.stat}>
+                    <span className={statsStyles.label}>Sets Won:</span>{" "}
+                    {user1Stats.setsWon}
+                  </p>
+                  <p className={statsStyles.stat}>
+                    <span className={statsStyles.label}>Sets Lost:</span>{" "}
+                    {user1Stats.setsLost}
+                  </p>
+                </div>
+                <div
+                  className={`${statsStyles.statRow} ${getColorClass(
+                    user1Stats.gamesWon > user1Stats.gamesLost,
+                    user1Stats.gamesWon === user1Stats.gamesLost
+                  )}`}
+                >
+                  <p className={statsStyles.stat}>
+                    <span className={statsStyles.label}>Games Won:</span>{" "}
+                    {user1Stats.gamesWon}
+                  </p>
+                  <p className={statsStyles.stat}>
+                    <span className={statsStyles.label}>Games Lost:</span>{" "}
+                    {user1Stats.gamesLost}
+                  </p>
+                </div>
               </div>
             )}
           </div>
 
           <div className={styles.formGroup}>
             {user2Stats && user1 && user2 && (
-              <div>
-                <h3>
+              <div className={statsStyles.statsContainer}>
+                <h3 className={statsStyles.heading}>
                   Stats for {user1.username} vs {user2.username}
                 </h3>
-                <p>Wins: {user2Stats.wins}</p>
-                <p>Losses: {user2Stats.losses}</p>
-                <p>Win Rate: {user2Stats.winRate.toFixed(2)}%</p>
-                <p>Total Matches: {user2Stats.totalMatches}</p>
-                <p>Sets Won: {user2Stats.setsWon}</p>
-                <p>Sets Lost: {user2Stats.setsLost}</p>
-                <p>Games Won: {user2Stats.gamesWon}</p>
-                <p>Games Lost: {user2Stats.gamesLost}</p>
+                <div
+                  className={`${statsStyles.statRow} ${getColorClass(
+                    user2Stats.wins > user2Stats.losses,
+                    user2Stats.wins === user2Stats.losses
+                  )}`}
+                >
+                  <p className={statsStyles.stat}>
+                    <span className={statsStyles.label}>Wins:</span>{" "}
+                    {user2Stats.wins}
+                  </p>
+                  <p className={statsStyles.stat}>
+                    <span className={statsStyles.label}>Losses:</span>{" "}
+                    {user2Stats.losses}
+                  </p>
+                </div>
+                <div
+                  className={`${statsStyles.statRow} ${getColorClass(
+                    user2Stats.winRate > 50,
+                    user2Stats.winRate === 50
+                  )}`}
+                >
+                  <p className={statsStyles.stat}>
+                    <span className={statsStyles.label}>Win Rate:</span>{" "}
+                    {user2Stats.winRate.toFixed(2)}%
+                  </p>
+                  <p className={statsStyles.stat}>
+                    <span className={statsStyles.label}>Total Matches:</span>{" "}
+                    {user2Stats.totalMatches}
+                  </p>
+                </div>
+                <div
+                  className={`${statsStyles.statRow} ${getColorClass(
+                    user2Stats.setsWon > user2Stats.setsLost,
+                    user2Stats.setsWon === user2Stats.setsLost
+                  )}`}
+                >
+                  <p className={statsStyles.stat}>
+                    <span className={statsStyles.label}>Sets Won:</span>{" "}
+                    {user2Stats.setsWon}
+                  </p>
+                  <p className={statsStyles.stat}>
+                    <span className={statsStyles.label}>Sets Lost:</span>{" "}
+                    {user2Stats.setsLost}
+                  </p>
+                </div>
+                <div
+                  className={`${statsStyles.statRow} ${getColorClass(
+                    user2Stats.gamesWon > user2Stats.gamesLost,
+                    user2Stats.gamesWon === user2Stats.gamesLost
+                  )}`}
+                >
+                  <p className={statsStyles.stat}>
+                    <span className={statsStyles.label}>Games Won:</span>{" "}
+                    {user2Stats.gamesWon}
+                  </p>
+                  <p className={statsStyles.stat}>
+                    <span className={statsStyles.label}>Games Lost:</span>{" "}
+                    {user2Stats.gamesLost}
+                  </p>
+                </div>
               </div>
             )}
           </div>
