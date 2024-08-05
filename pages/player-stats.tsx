@@ -61,16 +61,51 @@ const UserStats: React.FC = () => {
     const userMatches = matches.filter(
       (match) => match.player1Id === userId || match.player2Id === userId
     );
-    const wins = userMatches.filter(
-      (match) => match.player1Id === userId
-    ).length;
-    const losses = userMatches.filter(
-      (match) => match.player2Id === userId
-    ).length;
+
+    let wins = 0;
+    let losses = 0;
+    let setsWon = 0;
+    let setsLost = 0;
+    let gamesWon = 0;
+    let gamesLost = 0;
+
+    userMatches.forEach((match) => {
+      const isPlayer1 = match.player1Id === userId;
+      const matchWins = isPlayer1 ? 1 : 0;
+      const matchLosses = isPlayer1 ? 0 : 1;
+
+      wins += matchWins;
+      losses += matchLosses;
+
+      match.score.forEach((setScore) => {
+        const [player1Games, player2Games] = setScore.split("-").map(Number);
+        if (isPlayer1) {
+          setsWon += player1Games > player2Games ? 1 : 0;
+          setsLost += player1Games < player2Games ? 1 : 0;
+          gamesWon += player1Games;
+          gamesLost += player2Games;
+        } else {
+          setsWon += player2Games > player1Games ? 1 : 0;
+          setsLost += player2Games < player1Games ? 1 : 0;
+          gamesWon += player2Games;
+          gamesLost += player1Games;
+        }
+      });
+    });
+
     const totalMatches = wins + losses;
     const winRate = totalMatches ? (wins / totalMatches) * 100 : 0;
 
-    return { wins, losses, winRate };
+    return {
+      wins,
+      losses,
+      winRate,
+      totalMatches,
+      setsWon,
+      setsLost,
+      gamesWon,
+      gamesLost,
+    };
   };
 
   const getFilteredStats = (userId1: number, userId2: number) => {
@@ -79,16 +114,51 @@ const UserStats: React.FC = () => {
         (match.player1Id === userId1 && match.player2Id === userId2) ||
         (match.player1Id === userId2 && match.player2Id === userId1)
     );
-    const wins = userMatches.filter(
-      (match) => match.player1Id === userId1
-    ).length;
-    const losses = userMatches.filter(
-      (match) => match.player2Id === userId1
-    ).length;
+
+    let wins = 0;
+    let losses = 0;
+    let setsWon = 0;
+    let setsLost = 0;
+    let gamesWon = 0;
+    let gamesLost = 0;
+
+    userMatches.forEach((match) => {
+      const isPlayer1 = match.player1Id === userId1;
+      const matchWins = isPlayer1 ? 1 : 0;
+      const matchLosses = isPlayer1 ? 0 : 1;
+
+      wins += matchWins;
+      losses += matchLosses;
+
+      match.score.forEach((setScore) => {
+        const [player1Games, player2Games] = setScore.split("-").map(Number);
+        if (isPlayer1) {
+          setsWon += player1Games > player2Games ? 1 : 0;
+          setsLost += player1Games < player2Games ? 1 : 0;
+          gamesWon += player1Games;
+          gamesLost += player2Games;
+        } else {
+          setsWon += player2Games > player1Games ? 1 : 0;
+          setsLost += player2Games < player1Games ? 1 : 0;
+          gamesWon += player2Games;
+          gamesLost += player1Games;
+        }
+      });
+    });
+
     const totalMatches = wins + losses;
     const winRate = totalMatches ? (wins / totalMatches) * 100 : 0;
 
-    return { wins, losses, winRate };
+    return {
+      wins,
+      losses,
+      winRate,
+      totalMatches,
+      setsWon,
+      setsLost,
+      gamesWon,
+      gamesLost,
+    };
   };
 
   const user1 =
@@ -148,6 +218,11 @@ const UserStats: React.FC = () => {
                 <p>Wins: {user1Stats.wins}</p>
                 <p>Losses: {user1Stats.losses}</p>
                 <p>Win Rate: {user1Stats.winRate.toFixed(2)}%</p>
+                <p>Total Matches: {user1Stats.totalMatches}</p>
+                <p>Sets Won: {user1Stats.setsWon}</p>
+                <p>Sets Lost: {user1Stats.setsLost}</p>
+                <p>Games Won: {user1Stats.gamesWon}</p>
+                <p>Games Lost: {user1Stats.gamesLost}</p>
               </div>
             )}
           </div>
@@ -161,6 +236,11 @@ const UserStats: React.FC = () => {
                 <p>Wins: {user2Stats.wins}</p>
                 <p>Losses: {user2Stats.losses}</p>
                 <p>Win Rate: {user2Stats.winRate.toFixed(2)}%</p>
+                <p>Total Matches: {user2Stats.totalMatches}</p>
+                <p>Sets Won: {user2Stats.setsWon}</p>
+                <p>Sets Lost: {user2Stats.setsLost}</p>
+                <p>Games Won: {user2Stats.gamesWon}</p>
+                <p>Games Lost: {user2Stats.gamesLost}</p>
               </div>
             )}
           </div>
