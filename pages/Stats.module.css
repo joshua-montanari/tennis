@@ -23,6 +23,7 @@
   
   .stat {
     font-size: 1.2em;
+    font-weight: bold
   }
   
   .label {
@@ -42,3 +43,73 @@
     border-color: red;
   }
   
+  .gold {
+    border-color: gold;
+    background-color: #fff9c4;
+  }
+  
+  .silver {
+    border-color: silver;
+    background-color: #e0e0e0;
+  }
+  
+  .bronze {
+    border-color: #cd7f32;
+    background-color: #f4a460;
+  }
+
+  .statsContainer {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .heading {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  
+  .helpIcon {
+    font-size: 1.2em;
+    color: #0070f3;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .helpPopup {
+    position: fixed; /* Change to fixed to center on screen */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the modal */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+  
+  .helpPopup h3 {
+    margin-top: 0;
+  }
+  
+  .helpPopup ul {
+    list-style-type: disc;
+    margin: 10px 0;
+    padding-left: 20px;
+  }
+  
+  .closeHelp {
+    background-color: #0070f3;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }

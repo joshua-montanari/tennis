@@ -26,6 +26,11 @@ const Header: React.FC = () => {
           Player Stats
         </a>
       </Link>
+      <Link href="/rankings">
+        <a className="bold" data-active={isActive("/")}>
+          Rankings
+        </a>
+      </Link>
       <style jsx>{`
         .bold {
           font-weight: bold;
