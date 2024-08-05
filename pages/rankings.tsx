@@ -65,11 +65,13 @@ const Ratings: React.FC = () => {
     const initialElo = 1000;
     const kFactor = 32;
     let newEloRatings: { [key: number]: number } = {};
+    let matchCounts: { [key: number]: number } = {};
 
     // Initialize Elo ratings
     users.forEach((user) => {
       if (!filterFeatherSound || user.id !== 4) {
         newEloRatings[user.id] = initialElo;
+        matchCounts[user.id] = 0;
       }
     });
 
@@ -86,6 +88,9 @@ const Ratings: React.FC = () => {
       if (filterFeatherSound && (player1Id === 4 || player2Id === 4)) {
         return; // Skip match if user ID 4 is involved
       }
+
+      matchCounts[player1Id] = (matchCounts[player1Id] || 0) + 1;
+      matchCounts[player2Id] = (matchCounts[player2Id] || 0) + 1;
 
       const player1Elo = newEloRatings[player1Id] || initialElo;
       const player2Elo = newEloRatings[player2Id] || initialElo;
@@ -147,6 +152,13 @@ const Ratings: React.FC = () => {
       // Optional: Additional adjustments based on sets and games could be added here if needed
     });
 
+    // Filter players with fewer than 2 matches
+    Object.keys(newEloRatings).forEach((userId) => {
+      if (matchCounts[Number(userId)] < 2) {
+        delete newEloRatings[Number(userId)];
+      }
+    });
+
     setEloRatings(newEloRatings);
   };
 
@@ -161,6 +173,7 @@ const Ratings: React.FC = () => {
         isDoubles ? user.username.includes("/") : !user.username.includes("/")
       )
       .filter((user) => !(filterFeatherSound && user.id === 4))
+      .filter((user) => eloRatings[user.id] !== undefined) // Ensure player is ranked
       .sort((a, b) => (eloRatings[b.id] || 0) - (eloRatings[a.id] || 0));
   };
 
