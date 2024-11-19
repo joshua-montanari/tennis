@@ -11,6 +11,12 @@ export type MatchProps = {
 };
 
 const Post: React.FC<{ match: MatchProps }> = ({ match }) => {
+  const matchDate = new Date(match.date);
+  const formattedDate = new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(matchDate);
   return (
     <div onClick={() => Router.push("/p/[id]", `/p/${match.id}`)}>
       <h2>{match.location} Match</h2>
@@ -22,7 +28,7 @@ const Post: React.FC<{ match: MatchProps }> = ({ match }) => {
       {match.score.map((score) => {
         return <span style={{ padding: "5px" }}>{score}</span>;
       })}
-      <h4>Date Submitted: {match.date}</h4>
+      <h4>Date Submitted: {formattedDate}</h4>
       <style jsx>{`
         div {
           color: inherit;

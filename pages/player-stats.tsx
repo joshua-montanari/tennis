@@ -3,12 +3,12 @@ import styles from "./p/CreateMatchForm.module.css"; // Reusing styles from Crea
 import Layout from "../components/Layout";
 import statsStyles from "./Stats.module.css"; // New CSS module for styling stats
 
-interface User {
+export interface User {
   id: number;
   username: string;
 }
 
-interface Match {
+export interface Match {
   id: number;
   location: string;
   player1Id: number;

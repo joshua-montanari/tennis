@@ -33,7 +33,9 @@ const Ratings: React.FC = () => {
   const [filterFeatherSound, setFilterFeatherSound] = useState(true);
   const [filterSeason1, setFilterSeason1] = useState(false);
   const [filterSeason2, setFilterSeason2] = useState(true);
-  const currentDateTime = new Date().toISOString();
+  const season2DateStart = new Date(
+    Date.UTC(2024, 10, 11, 0, 0, 0)
+  ).toISOString();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -92,8 +94,8 @@ const Ratings: React.FC = () => {
     const isMatchInSeason = (match: Match) => {
       const matchDate = new Date(match.createdAt).toISOString();
       return (
-        (filterSeason1 && matchDate <= currentDateTime) ||
-        (filterSeason2 && matchDate > currentDateTime)
+        (filterSeason1 && matchDate <= season2DateStart) ||
+        (filterSeason2 && matchDate > season2DateStart)
       );
     };
 
@@ -179,7 +181,7 @@ const Ratings: React.FC = () => {
 
     // Remove players with insufficient matches
     Object.keys(newEloRatings).forEach((userId) => {
-      if (matchCounts[Number(userId)] < 2) {
+      if (matchCounts[Number(userId)] < 1) {
         delete newEloRatings[Number(userId)];
       }
     });
