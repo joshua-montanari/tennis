@@ -32,9 +32,13 @@ const Ratings: React.FC = () => {
   const [showHelp, setShowHelp] = useState(false);
   const [filterFeatherSound, setFilterFeatherSound] = useState(true);
   const [filterSeason1, setFilterSeason1] = useState(false);
-  const [filterSeason2, setFilterSeason2] = useState(true);
+  const [filterSeason2, setFilterSeason2] = useState(false);
+  const [filterSeason3, setFilterSeason3] = useState(true);
   const season2DateStart = new Date(
     Date.UTC(2024, 10, 11, 0, 0, 0)
+  ).toISOString();
+  const season3DateStart = new Date(
+    Date.UTC(2025, 4, 5, 0, 0, 0)
   ).toISOString();
 
   useEffect(() => {
@@ -72,7 +76,7 @@ const Ratings: React.FC = () => {
     if (users.length > 0 && matches.length > 0) {
       calculateEloRatings();
     }
-  }, [users, matches, filterFeatherSound, filterSeason1, filterSeason2]);
+  }, [users, matches, filterFeatherSound, filterSeason1, filterSeason2, filterSeason3]);
 
   const calculateEloRatings = () => {
     const initialElo = 1000;
@@ -95,7 +99,8 @@ const Ratings: React.FC = () => {
       const matchDate = new Date(match.createdAt).toISOString();
       return (
         (filterSeason1 && matchDate <= season2DateStart) ||
-        (filterSeason2 && matchDate > season2DateStart)
+        (filterSeason2 && matchDate > season2DateStart && matchDate <= season3DateStart) ||
+        (filterSeason3 && matchDate > season3DateStart)
       );
     };
 
@@ -194,6 +199,7 @@ const Ratings: React.FC = () => {
     if (name === "filterFeatherSound") setFilterFeatherSound(checked);
     if (name === "filterSeason1") setFilterSeason1(checked);
     if (name === "filterSeason2") setFilterSeason2(checked);
+    if (name === "filterSeason3") setFilterSeason3(checked);
   };
 
   const getSortedPlayers = (isDoubles: boolean) => {
@@ -243,6 +249,15 @@ const Ratings: React.FC = () => {
               onChange={handleCheckboxChange}
             />
             Season 2
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              name="filterSeason3"
+              checked={filterSeason3}
+              onChange={handleCheckboxChange}
+            />
+            Season 3
           </label>
         </div>
 
